@@ -79,7 +79,7 @@ else
 $error("PWRITE stable failed",$time);
 
 property p_done;
-@(posedge PCLK) !PREADY |-> !transfer_done;
+  @(posedge PCLK) !PREADY |=> !transfer_done;
 endproperty
 a_done: assert property(p_done)
 $display("done passed ", $time);
@@ -87,7 +87,7 @@ else
 $error("done failed",$time);
 
 property p_error;
-@(posedge PCLK) error |-> (PREADY && PSLVERR);
+  @(posedge PCLK) error |-> $past(PREADY && PSLVERR);
 endproperty
 a_error: assert property(p_error)
 $display("Error passed ", $time);
@@ -129,7 +129,7 @@ else
 $error("Idle ENABLE failed",$time);
 
 property p_read_PWRITE;
-@(posedge PCLK) (PSEL && write_read==0) |-> !PWRITE;
+  @(posedge PCLK) (PSEL && write_read==0) |=> !PWRITE;
 endproperty
 a_read_PWRITE: assert property(p_read_PWRITE)
 $display("PWRITE read passed ", $time);
@@ -137,7 +137,7 @@ else
 $error("PWRITE read failed",$time);
 
 property p_write_PWRITE;
-@(posedge PCLK) (PSEL && write_read==1) |-> PWRITE;
+  @(posedge PCLK) (PSEL && write_read==1) |=> PWRITE;
 endproperty
 a_write_PWRITE: assert property(p_write_PWRITE)
 $display("PWRITE write passed ", $time);
@@ -168,7 +168,7 @@ else
 $error("Idle failed",$time);
 
 property p_done_comp;
-@(posedge PCLK) transfer_done |->( PSEL && PENABLE && PREADY);
+  @(posedge PCLK) transfer_done |-> $past( PSEL && PENABLE && PREADY);
 endproperty
 a_done_comp: assert property(p_done_comp)
 $display("transfer_done passed ", $time);
@@ -187,13 +187,8 @@ default input #1 output #0;
 input transfer, write_read, addr_in, wdata_in, strb_in, PRDATA, PREADY, PSLVERR;
 input PADDR, PSEL, PENABLE, PWRITE, PWDATA, PSTRB, rdata_out, transfer_done, error;
 endclocking
-clocking ref_cb @(posedge PCLK);
-default input #1 output #0;
-input PRESETn, transfer, write_read, addr_in, wdata_in, strb_in, PRDATA, PREADY, PSLVERR;
-endclocking
 modport DRV(clocking drv_cb);
 modport MON(clocking mon_cb);
-modport REF_SB(clocking ref_cb);
 endinterface
 
   
