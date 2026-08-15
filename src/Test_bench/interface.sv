@@ -1,4 +1,4 @@
-include "defines.sv"
+`include "defines.sv"
 interface apb_if(input bit PCLK,PRESETn);
 logic transfer, write_read;
 logic [`ADDR_WIDTH-1:0]addr_in;
