@@ -17,7 +17,7 @@ logic transfer_done;
 logic error;
 logic PWRITE;
 property p_reset;
-@(posedge PCLK) !PRESETn |-> (PSEL==0 && PENABLE==0 && PWRITE==0 && PADDR==0 && PWDATA==0 && PSTRB==0 && rdata_out==0 && transfer_done==0 && error==0);
+  @(posedge PCLK) !PRESETn |=> (PSEL==0 && PENABLE==0 && PWRITE==0 && PADDR==0 && PWDATA==0 && PSTRB==0 && rdata_out==0 && transfer_done==0 && error==0);
 endproperty
 a_reset: assert property(p_reset)
 $display("Reset Assertion passed ", $time);
