@@ -1,4 +1,4 @@
-include "defines.sv";
+`include "defines.sv";
 class apb_transaction;
 rand bit transfer;
 rand bit write_read;
