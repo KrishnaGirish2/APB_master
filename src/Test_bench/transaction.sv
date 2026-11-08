@@ -38,6 +38,7 @@ copy.rdata_out=rdata_out;
 copy.transfer_done=transfer_done;
 copy.error=error;
 copy.wait_acc=wait_acc;
+copy.wait_clk=wait_clk;
 return copy;
 endfunction
 endclass
