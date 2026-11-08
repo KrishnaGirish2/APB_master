@@ -2,6 +2,7 @@
 class apb_transaction;
 rand bit transfer;
 rand bit write_read;
+rand int wait_clk;
 rand bit [`ADDR_WIDTH-1:0]addr_in;
 rand bit [`DATA_WIDTH-1:0] wdata_in;
 rand bit [`DATA_WIDTH/8 -1:0]strb_in;
@@ -16,6 +17,7 @@ bit transfer_done, error;
 int wait_acc;
 constraint c{ transfer==1;}
 constraint strb{ if(write_read==0) strb_in==0;}
+constraint w_count{ wait_clk inside {[0:5]};}
 virtual function apb_transaction copy();
 copy=new();
 copy.transfer=transfer;
