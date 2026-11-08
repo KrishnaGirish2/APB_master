@@ -187,8 +187,16 @@ default input #1 output #0;
 input transfer, write_read, addr_in, wdata_in, strb_in, PRDATA, PREADY, PSLVERR;
 input PADDR, PSEL, PENABLE, PWRITE, PWDATA, PSTRB, rdata_out, transfer_done, error;
 endclocking
+
+clocking out_mon_cb @(posedge PCLK);
+default input #1 output #0;
+input PADDR, PSEL, PENABLE, PWRITE, PWDATA, PSTRB, rdata_out, transfer_done, error;
+input PREADY, PRESETn;
+endclocking
+
 modport DRV(clocking drv_cb);
 modport MON(clocking mon_cb);
+modport OUT_MON(clocking out_mon_cb);
 endinterface
 
   
