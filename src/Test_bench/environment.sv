@@ -3,11 +3,12 @@ class apb_environment;
   virtual apb_if drv_vif;
   virtual apb_if mon_vif;
   mailbox #(apb_transaction) mbx_gd;
-  mailbox #(apb_transaction) mbx_ds;
-  mailbox #(apb_transaction) mbx_ms;
+  mailbox #(apb_transaction) mbx_im;
+  mailbox #(apb_transaction) mbx_om;
   apb_generator gen;
   apb_driver drv;
   apb_monitor mon;
+  apb_output_monitor out_mon;
   apb_scoreboard scb;
   function new(virtual apb_if drv_vif, virtual apb_if mon_vif);
     this.drv_vif=drv_vif;
@@ -15,12 +16,13 @@ class apb_environment;
   endfunction
   task build(); begin
     mbx_gd=new();
-    mbx_ds=new();
-    mbx_ms=new();
+    mbx_im=new();
+    mbx_om=new();
     gen=new(mbx_gd);
-    drv=new(mbx_gd,mbx_ds,drv_vif);
-    mon=new(mon_vif,mbx_ms);  
-    scb=new(mbx_ds,mbx_ms);
+    drv=new(mbx_gd,drv_vif);
+    mon=new(mon_vif,mbx_im);  
+    out_mon=new(mon_vif,mbx_om);
+    scb=new(mbx_im,mbx_om);
     end
   endtask
   task start();
@@ -28,8 +30,8 @@ class apb_environment;
       gen.start();
       drv.start();
       mon.start();
+      out_mon.start();
       scb.start();
     join
   endtask
 endclass
-
