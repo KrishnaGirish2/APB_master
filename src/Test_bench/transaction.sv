@@ -6,7 +6,7 @@ rand int wait_clk;
 rand bit [`ADDR_WIDTH-1:0]addr_in;
 rand bit [`DATA_WIDTH-1:0] wdata_in;
 rand bit [`DATA_WIDTH/8 -1:0]strb_in;
-bit [`DATA_WIDTH-1:0] PRDATA;
+rand bit [`DATA_WIDTH-1:0] PRDATA;
 bit PREADY, PSLVERR;
 bit [`ADDR_WIDTH-1:0] PADDR;
 bit PSEL, PENABLE,PWRITE;
