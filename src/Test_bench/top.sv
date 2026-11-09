@@ -15,7 +15,7 @@ module top();
   end
   apb_if intrf(PCLK,PRESETn);
   apb_master #(.ADDR_WIDTH(8), .DATA_WIDTH(32)) DUV (.PCLK(PCLK),.PRESETn(PRESETn),.transfer(intrf.transfer),.write_read(intrf.write_read),.addr_in(intrf.addr_in),.wdata_in(intrf.wdata_in),.strb_in(intrf.strb_in),.PRDATA(intrf.PRDATA),.PREADY(intrf.PREADY),.PSLVERR(intrf.PSLVERR),.PADDR(intrf.PADDR),.PSEL(intrf.PSEL),.PENABLE(intrf.PENABLE),.PWRITE(intrf.PWRITE),.PWDATA(intrf.PWDATA),.PSTRB(intrf.PSTRB),.rdata_out(intrf.rdata_out),.transfer_done(intrf.transfer_done),.error(intrf.error));
-  apb_test tb=new(intrf.DRV,intrf.MON);
+  apb_test tb=new(intrf.DRV,intrf.MON,intrf.OUT_MON);
   initial begin
   tb.run();
   #1000;
